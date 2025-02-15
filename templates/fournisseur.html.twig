@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{pname}}{% endblock %}
+{% block body %}
+{{ include('partials/_flash_messages.html.twig') }}
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                </div>
+                <div class="card-body card-block">
+                    <div class="card-title">
+                        <h3 class="text-center">Ajouter un fournisseur</h3>
+                    </div>
+                    <hr>
+                    <form method='POST' enctype="multipart/form-data">
+                        <input type="hidden" name="token" value="{{ csrf_token('user') }}" />
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="name" class="control-label mb-1"></label>
+                            </div>
+                            <div class="col-12 col-md-5">
+                                <input id="name" name="name" type="text" class="form-control" required="true" aria-invalid="false" placeholder="Nom du fournisseur" value="{% if fournisseur is defined %}{{fournisseur.name}}{% endif %}">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="num_fournisseur" class="control-label mb-1"></label>
+                            </div>
+                            <div class="col-12 col-md-5">
+                                <input id="num_fournisseur" name="num_fournisseur" type="text" class="form-control" required="true"  aria-invalid="false" placeholder="numéro fournisseur" value="{% if fournisseur is defined %}{{fournisseur.numFournisseur}}{% endif %}">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"></div>
+                            <div class="col-12 col-md-9">
+                                <button type="submit" class="btn btn-success btn-sm">
+                                    <i class="fa fa-dot-circle-o"></i> Envoyer
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
