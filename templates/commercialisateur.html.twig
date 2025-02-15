@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{pname}}{% endblock %}
+{% block body %}
+{{ include('partials/_flash_messages.html.twig') }}
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                </div>
+                <div class="card-body card-block">
+                    <div class="card-title">
+                        <h3 class="text-center">Ajouter un commercialisateur </h3>
+                    </div>
+                    <hr>
+                    <form method='POST' enctype="multipart/form-data">
+                        <input type="hidden" name="token" value="{{ csrf_token('commercialisateurs') }}" />
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="name" class="control-label mb-1">Libellé du commercialisateur</label>
+                            </div>
+                            <div class="col-12 col-md-5">
+                                <input id="name" name="name" type="text" class="form-control" required="true" aria-invalid="false" placeholder="Nom du commercialisateur" value="{% if fournisseur is defined %}{{fournisseur.name}}{% endif %}">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="num_commercialisateur" class="control-label mb-1">Code du commercialisateur</label>
+                            </div>
+                            <div class="col-12 col-md-5">
+                                <input id="num_commercialisateur" name="num_commercialisateur" type="text" class="form-control" required="true"  aria-invalid="false" placeholder="Code commercialisateur" value="{% if fournisseur is defined %}{{fournisseur.numFournisseur}}{% endif %}">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="telephone" class="control-label mb-1">Téléphone du commercialisateur</label>
+                            </div>
+                            <div class="col-12 col-md-5">
+                                <input id="telephone" name="telephone" type="text" class="form-control"  aria-invalid="false" placeholder="Téléphone commercialisateur" value="{% if fournisseur is defined %}{{fournisseur.telephone}}{% endif %}">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="couriel" class="control-label mb-1">Couriel du commercialisateur</label>
+                            </div>
+                            <div class="col-12 col-md-5">
+                                <input id="couriel" name="couriel" type="email" class="form-control"   aria-invalid="false" placeholder="Couriel commercialisateur" value="{% if fournisseur is defined %}{{fournisseur.couriel}}{% endif %}">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="adresse" class="control-label mb-1">Adresse du commercialisateur</label>
+                            </div>
+                            <div class="col-12 col-md-5">
+                                <input id="adresse" name="adresse" type="text" class="form-control"   aria-invalid="false" placeholder="Adresse commercialisateur" value="{% if fournisseur is defined %}{{fournisseur.adresse}}{% endif %}">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="code_postal" class="control-label mb-1"></label>
+                            </div>
+                            <div class="col-12 col-md-5">
+                                <input id="code_postal" name="code_postal" type="text" class="form-control"   aria-invalid="false" placeholder="Code postal commercialisateur" value="{% if fournisseur is defined %}{{fournisseur.codePostal}}{% endif %}">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="ville" class="control-label mb-1"></label>
+                            </div>
+                            <div class="col-12 col-md-5">
+                                <input id="ville" name="ville" type="text" class="form-control"   aria-invalid="false" placeholder="Ville commercialisateur" value="{% if fournisseur is defined %}{{fournisseur.ville}}{% endif %}">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"></div>
+                            <div class="col-12 col-md-9">
+                                <button type="submit" class="btn btn-success btn-sm">
+                                    <i class="fa fa-dot-circle-o"></i> Envoyer
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

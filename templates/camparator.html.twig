@@ -1,0 +1,188 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{asset('vendors/chosen/chosen.min.css')}}">
+{% endblock %}
+{% block body %}
+{{ include('partials/_flash_messages.html.twig') }}
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="alert  alert-warning fade show text-center" id="spinner-load" role="alert" style="display: none;">
+                Veuillez patienter pendant l'importation...
+            </div>
+            <div class="alert  alert-success fade show text-center" id="spinner-load-success" role="alert" style="display: none;">
+                Comparaison terminer!
+            </div>
+            <div class="alert  alert-danger fade show text-center" id="spinner-load-error-file" role="alert" style="display: none;">
+                Uniquement les fichiers <b>Csv</b> et <b>Excel</b> sont acceptés
+            </div>
+            <div class="card">
+                <div class="card-header">
+                </div>
+                <div class="card-body card-block">
+                    <div class="card-title">
+                        <h3 class="text-center">Uploder le fichier pour la comparaison </h3>
+                    </div>
+                    <hr>
+                    <form method='POST' enctype="multipart/form-data" id="upload_form_comparator">
+                        <input type="hidden" name="token" value="{{ csrf_token('uploadFileForComparaison') }}" />
+                        <div class="row form-group">
+                            <div class="col col-md-3"></div>
+                            <div class="col-12 col-md-9"><input type="file" id="file-input" required name="file-input" class="form-control-file"></div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-12 col-md-3">
+                                <div class="col-12">
+                                    <div class="form-check-inline form-check">
+                                        <label for="inline-radio1" class="form-check-label ">
+                                            <input type="radio" id="inline-radio1" name="niveau" value="1" class="form-check-input">1er Niveau
+                                        </label>&nbsp;&nbsp;&nbsp;
+                                        <label for="inline-radio2" class="form-check-label ">
+                                            <input type="radio" id="inline-radio2" name="niveau" value="2" class="form-check-input">2eme Niveau
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-2">
+                                <div class="col-12">
+                                    <select data-placeholder="Commercialisateurs" name="commercialisateurs" class="standardSelect" tabindex="1">
+                                        <option value=""></option>
+                                        {% for commercilisateur in commercilisateurs %}
+                                            <option value="{{commercilisateur.id}}">{{commercilisateur.numFournisseur}}-{{commercilisateur.name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-2">
+                                <div class="col-12">
+                                    <select data-placeholder="Employeurs" name="employeurs" class="standardSelect" tabindex="1">
+                                        <option value=""></option>
+                                        {% for employeur in employeurs %}
+                                            <option  value="{{employeur.id}}">{{employeur.raisonsociale}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-2">
+                                <div class="col-12">
+                                    <select data-placeholder="Type de population" name="type" class="standardSelect" tabindex="1">
+                                        <option value=""></option>
+                                        {% for typePopulation in typePopulations %}
+                                            <option  value="{{typePopulation.id}}">{{typePopulation.libelle}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-2">
+                                <div class="col-12">
+                                    <select data-placeholder="Département" name="departement" class="standardSelect" tabindex="1">
+                                        <option value=""></option>
+                                        {% for i in 1..99 %}
+                                            <option value="{{i}}">{{i}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-1">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-success btn-sm pull-right">
+                                    <i class="fa fa-dot-circle-o"></i> Envoyer
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <form method='POST' action="{{path('app_generatePdf')}}" enctype="multipart/form-data">
+                    <div class="card-header row no-margin-left-right">
+                        <div class=" col-12 col-md-8">
+                            <strong class="card-title">Résultat</strong>
+                        </div>
+                        {% if response is not empty %}
+                            <div class=" col-12 col-md-4 text-right">
+                                <button type="submit" class="btn btn-success btn-sm">
+                                    <i class="fa fa-file-pdf-o"></i> Générer PDF 
+                                </button>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="card-body card-block">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nom</th>
+                                    <th scope="col">Prénom</th>
+                                    <th scope="col">NNI</th>
+                                    <th scope="col">Matricule</th>
+                                    <th scope="col">Employeur</th>
+                                    <th scope="col">Dernier employeur</th>
+                                    <th scope="col">Début période conso</th>
+                                    <th scope="col">Fin période conso</th>
+                                    <th scope="col">Montant</th>
+                                    <th scope="col">Taxe</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if response is not empty %}
+                                    {% for rep in response %}
+                                        <tr>
+                                            <td>{{rep.nom|raw}}</td>
+                                            <td>{{rep.prenom|raw}}</td>
+                                            <td>{{rep.nni|raw}}</td>
+                                            <td>{{rep.matricule|raw}}</td>
+                                            <td>{{rep.employeur|raw}}</td>
+                                            <td>{{rep.dernierEmployeur|raw}}</td>
+                                            <td>{{rep.debutPeriode|raw}}</td>
+                                            <td>{{rep.finPeriode|raw}}</td>
+                                            <td>{{rep.montant|raw}}</td>
+                                            <td>{{rep.taxe|raw}}</td>
+                                        </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr>
+                                        <td colspan="10">Pas de resultat pour le moment</td>
+                                    </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{asset('assets/js/import.js')}}"></script>
+    <script src="{{asset('vendors/chosen/chosen.jquery.js')}}"></script>
+    <script>
+        jQuery(document).ready(function() {
+           /* if ($('.chosen-container').length > 0) {
+                $('.chosen-container').on('touchstart', function(e){
+                    e.stopPropagation(); e.preventDefault();
+                        jQuery(".standardSelect").chosen({
+                            disable_search_threshold: 10,
+                            no_results_text: "Oops, aucun resultat!",
+                            width: "100%"
+                        });
+                    $(this).trigger('mousedown');
+                });
+            }*/
+            jQuery(".standardSelect").chosen({
+                disable_search_threshold: 0,
+                no_results_text: "Oops, aucun resultat!",
+                width: "100%"
+            });
+        });
+    </script>
+{% endblock %}

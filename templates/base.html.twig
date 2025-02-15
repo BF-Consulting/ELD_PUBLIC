@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>FELD | {% block title %}{% endblock %}</title>
+        <meta name="description" content="application">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{asset('vendors/bootstrap/dist/css/bootstrap.min.css')}}">
+        <link rel="stylesheet" href="{{asset('vendors/font-awesome/css/font-awesome.min.css')}}">
+        <link rel="stylesheet" href="{{asset('vendors/themify-icons/css/themify-icons.css')}}">
+        <link rel="stylesheet" href="{{asset('vendors/flag-icon-css/css/flag-icon.min.css')}}">
+        <link rel="stylesheet" href="{{asset('vendors/selectFX/css/cs-skin-elastic.css')}}">
+        <link rel="stylesheet" href="{{asset('vendors/jqvmap/dist/jqvmap.min.css')}}">
+
+        {% block stylesheets %}
+        {% endblock %}
+        <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+    </head>
+    <body>
+        <!-- Left Panel -->
+        <aside id="left-panel" class="left-panel">
+            <nav class="navbar navbar-expand-sm navbar-default">
+                <div class="navbar-header">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <a class="navbar-brand" href="{{path('app_home')}}">FELD</a>
+                    <a class="navbar-brand hidden" href="{{path('app_home')}}" style="font-size: 0.8em;margin-right: 1em;">FELD</a>
+                </div>
+
+                <div id="main-menu" class="main-menu collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active">
+                            <a href="{{path('app_home')}}"> <i class="menu-icon fa fa-dashboard"></i>Acceuil </a>
+                        </li>
+                        <li class="menu-item-has-children dropdown active">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-users"></i>Utilisateurs</a>
+                            <ul class="sub-menu children dropdown-menu">
+                                <li><i class="fa fa-plus"></i><a href="{{path('app_utilisateur')}}">Ajouter / Modifier</a></li>
+                                <li><i class="fa fa-table"></i><a href="{{path('app_listutilisateurs')}}">Liste</a></li>
+                            </ul>
+                        </li>
+                        <li class="menu-item-has-children dropdown active">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-users"></i>Commercialisateur</a>
+                            <ul class="sub-menu children dropdown-menu">
+                                <li><i class="fa fa-plus"></i><a href="{{path('app_commercialisateurs')}}">Ajouter / Modifier</a></li>
+                                <li><i class="fa fa-table"></i><a href="{{path('app_listcommercialisateurs')}}">Liste</a></li>
+                            </ul>
+                        </li>
+                        <li class="menu-item-has-children dropdown active">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building"></i>Employeurs</a>
+                            <ul class="sub-menu children dropdown-menu">
+                                <li><i class="fa fa-plus"></i><a href="{{path('app_employeurs')}}">Ajouter / Modifier</a></li>
+                                <li><i class="fa fa-table"></i><a href="{{path('app_listemployeurs')}}">Liste</a></li>
+                            </ul>
+                        </li>
+                        <li class="menu-item-has-children dropdown active">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-exchange"></i>Type de population</a>
+                            <ul class="sub-menu children dropdown-menu">
+                                <li><i class="fa fa-plus"></i><a href="{{path('app_typePopulation')}}">Ajouter / Modifier</a></li>
+                                <li><i class="fa fa-table"></i><a href="{{path('app_listetypepopulation')}}">Liste</a></li>
+                            </ul>
+                        </li>
+                        <li class="active">
+                            <a href="{{path('app_historique')}}"> <i class="menu-icon fa fa-book"></i>Historique</a>
+                        </li>
+                        <li class="active">
+                            <a href="{{path('app_acteGestion')}}"> <i class="menu-icon fa fa-upload"></i>Acte de gestion</a>
+                        </li>
+                        <li class="active">
+                            <a href="{{path('app_upload_base_file')}}"> <i class="menu-icon fa fa-upload"></i>Import fichier de base </a>
+                        </li>
+                        <li class="active">
+                            <a href="{{path('app_comparator')}}"> <i class="menu-icon fa fa-exchange"></i>Comparateur</a>
+                        </li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </nav>
+            <nav class="logo-left-panel">
+                 <img class="align-content" src="{{asset('images/enedisgrdf.PNG')}}" alt="enedisgrdf">
+            </nav>
+        </aside><!-- /#left-panel -->
+        <!-- Left Panel -->
+
+        <!-- Right Panel -->
+        <div id="right-panel" class="right-panel">
+
+            <!-- Header-->
+            <header id="header" class="header">
+
+                <div class="header-menu">
+
+                    <div class="col-sm-7">
+                        <a id="menuToggle" class="menutoggle pull-left"><i class="fa fa fa-tasks"></i></a>
+                        <div class="header-left"> <h4 class="mb-3">Entreprises locales de distribution</h4></div>
+                    </div>
+
+                    <div class="col-sm-5">
+                        <div class="guide-btn">
+                            <a class="" href="#"><i class="fa fa-exclamation-circle fa-2x icon-outline-warning" aria-hidden="true"></i></a>
+                        </div>
+                        <div class="user-area dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img class="user-avatar rounded-circle" src="{{asset('images/admin.jpg')}}" alt="User Avatar">
+                            </a>
+
+                            <div class="user-menu dropdown-menu">
+                                <!--a class="nav-link" href="#"><i class="fa fa-user"></i> My Profile</a>
+
+                                <a class="nav-link" href="#"><i class="fa fa-user"></i> Notifications <span class="count">13</span></a>
+
+                                <a class="nav-link" href="#"><i class="fa fa-cog"></i> Settings</a-->
+
+                                <a class="nav-link" href="{{path('app_logout')}}"><i class="fa fa-power-off"></i> Déconexion</a>
+                            </div>
+                        </div>
+                        <!--div class="language-select dropdown" id="language-select">
+                            <a class="dropdown-toggle" href="#" data-toggle="dropdown"  id="language" aria-haspopup="true" aria-expanded="true">
+                                <i class="flag-icon flag-icon-us"></i>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="language">
+                                <div class="dropdown-item">
+                                    <span class="flag-icon flag-icon-fr"></span>
+                                </div>
+                                <div class="dropdown-item">
+                                    <i class="flag-icon flag-icon-es"></i>
+                                </div>
+                                <div class="dropdown-item">
+                                    <i class="flag-icon flag-icon-us"></i>
+                                </div>
+                                <div class="dropdown-item">
+                                    <i class="flag-icon flag-icon-it"></i>
+                                </div>
+                            </div>
+                        </div-->
+
+                    </div>
+                </div>
+
+            </header><!-- /header -->
+            <!-- Header-->
+
+            <div class="breadcrumbs">
+                <div class="col-sm-4">
+                    <div class="page-header float-left">
+                        <div class="page-title">
+                            <ol class="breadcrumb text-right">
+                                <li class="active">{{pname}}</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content mt-3">
+                {% block body %}
+                {% endblock %}
+            </div> <!-- .content -->
+        </div><!-- /#right-panel -->
+        <!-- Right Panel -->
+
+        <script src="{{asset('vendors/jquery/dist/jquery.min.js')}}"></script>
+        <script src="{{asset('vendors/popper.js/dist/umd/popper.min.js')}}"></script>
+        <script src="{{asset('vendors/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+        <script src="{{asset('assets/js/main.js')}}"></script>
+        {% block javascripts %}
+        {% endblock %}
+    </body>
+</html>
